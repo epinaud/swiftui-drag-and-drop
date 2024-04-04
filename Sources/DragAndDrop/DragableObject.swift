@@ -60,8 +60,13 @@ struct DragableObject: ViewModifier {
                         withAnimation(.linear(duration: DrawingConstants.dragStateOnEndedTransitionDuration)) {
                             self.dragState = .none
                         }
-                        withAnimation(successfulDrop ? .none : .linear) {
-                            self.dragOffset = .zero
+//                        withAnimation(successfulDrop ? .none : .linear) {
+//                            self.dragOffset = .zero
+//                        }
+                        if !successfulDrop {
+                            withAnimation(.linear) {
+                                self.dragOffset = .zero
+                            }
                         }
                     }
             )

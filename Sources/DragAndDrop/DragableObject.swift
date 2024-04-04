@@ -43,6 +43,7 @@ struct DragableObject: ViewModifier {
         content
             .shadow(color: dragColor, radius: DrawingConstants.shadowRadius)
             .offset(x: dragOffset.width, y: dragOffset.height)
+            .transition(.asymmetric(insertion: .offset(dragOffset), removal: .identity))
             .gesture(
                 DragGesture(coordinateSpace: .global)
                     .onChanged { gesture in
@@ -59,12 +60,8 @@ struct DragableObject: ViewModifier {
                         withAnimation(.linear(duration: DrawingConstants.dragStateOnEndedTransitionDuration)) {
                             self.dragState = .none
                         }
-//                        withAnimation(successfulDrop ? .none : .linear) {
-//                            self.dragOffset = .zero
-//                        }
-                        withAnimation(.linear) {
+                        withAnimation(successfulDrop ? .none : .linear) {
                             self.dragOffset = .zero
-                            self.dragState = .none
                         }
                     }
             )
